@@ -1,0 +1,6 @@
+---
+# tasks file for yum
+- name: update and upgrade
+  yum:
+    name: '*'
+    state: latest

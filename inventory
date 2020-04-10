@@ -1,0 +1,2 @@
+[hans-engine]
+hans.engine.id ansible_host=localhost ansible_port=8061 ansible_user=hans-test ansible_become_password=hans-test-123

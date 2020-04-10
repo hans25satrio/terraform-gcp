@@ -1,0 +1,35 @@
+// Configure the Google Cloud provider
+provider "google" {
+ credentials = file("hans-test-c12aac521911.json")
+ project     = "hans-test-273709"
+ region      = "asia-southeast1"
+}
+
+// Terraform plugin for creating random ids
+resource "random_id" "instance_id" {
+ byte_length = 8
+}
+
+// A single Google Cloud Engine instance
+resource "google_compute_instance" "default" {
+ name         = "hans-test-${random_id.instance_id.hex}"
+ machine_type = "f1-micro"
+ zone         = "asia-southeast1-a"
+
+ boot_disk {
+   initialize_params {
+     image = "centos-7-v20200403"
+   }
+ }
+
+// Make sure the requirement is installed on all new instances for later steps
+ metadata_startup_script = "sudo yum update -y; sudo yum upgrade -y; sudo yum install -yq nano htop git wget zip unzip"
+
+ network_interface {
+   network = "default"
+
+   access_config {
+     // Include this section to give the VM an external ip address
+   }
+ }
+}

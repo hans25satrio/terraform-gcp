@@ -1,0 +1,26 @@
+---
+- hosts: all
+  vars:
+    CENTOS_COMMON_ROOT_PASSWORD: 'hans123'
+    CENTOS_COMMON_DEPLOY_PASSWORD: 'deploy123'
+    CENTOS_COMMON_LOGWATCH_EMAIL: youremail@example.com
+    centos_common_deploy_user_name: deploy
+    centos_common_deploy_public_keys:
+      - ~/.ssh/id_rsa.pub
+
+    centos_common_required_packages:
+      - ufw
+      - fail2ban
+      - unattended-upgrades
+      - logwatch
+
+    centos_common_optional_packages:
+      - mosh
+      - vim
+
+    centos_common_ssh_port: 22
+    centos_common_mosh_from_port: 60000
+    centos_common_mosh_to_port: 60010
+  roles:
+    - { role: roles/ssh, tags: 'configure-ssh' }
+  become: yes
